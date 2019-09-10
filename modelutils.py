@@ -89,7 +89,8 @@ def detectFace(img):
 
 def changeThresholds(cos=.5, euc=.7):
     """
-    Tunes the threshold used for comparison.
+    Tunes the threshold used for comparison. Choosing smaller threshold values leads to stricter decisions for recognition pipeline.
+    Larger values lead to more loose decisions.
     :param cos: Threshold for cosine similarity method.
     :param euc: Threshold for euclidian distance method
     :return: Nothing
