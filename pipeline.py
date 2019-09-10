@@ -1,6 +1,4 @@
 import cv2
-from datetime import datetime
-
 from PIL import Image
 
 from imageutils import loadDatabase, walkThroughoutDatabase, saveSpoofedFrame, saveFrame
@@ -12,7 +10,12 @@ foundFaces = {}
 spoofedFaces = {}
 
 
-def loadEmbeddings(dataset="dataset/"):  # , device = 'cpu', threshold_cosine = .5, threshold_euc = .7):
+def loadEmbeddings(dataset="dataset/"):
+    """
+    Loads the dataset of embeddings. If no valid dataset file is found, the function will create a new database file.
+    :param dataset: Path
+    :return: (Dict) A set of embeddings
+    """
     global embeddings
     isDatasetLoaded = False
     try:
@@ -28,6 +31,11 @@ def loadEmbeddings(dataset="dataset/"):  # , device = 'cpu', threshold_cosine = 
 
 
 def processByFrame(frame):
+    """
+    Process one single frame. It is a pipeline for face detection, spoofing check and recognition.
+    :param frame: A single frame
+    :return: Name of the detected face. Will return False otherwise.
+    """
     global missingCount, embeddings
 
     if len(embeddings) == 0:
@@ -58,6 +66,11 @@ def processByFrame(frame):
 
 
 def processVideo(video_path):
+    """
+    Process a video frame by frame.
+    :param video_path: Path of the video file.
+    :return: Same as 'processFrame'
+    """
     cap = cv2.VideoCapture(video_path)
     while True:
         _, frame = cap.read()
@@ -66,6 +79,11 @@ def processVideo(video_path):
 
 
 def processStream(stream_path):
+    """
+    Process a stream frame by frame.
+    :param stream_path: Stream URL
+    :return: Nothing
+    """
     cap = cv2.VideoCapture(stream_path)
     openCounter = 0
     spoofCounter = 0
